@@ -1,0 +1,366 @@
+[
+  {
+    "id": "misfat-al-abriyeen",
+    "title": "Misfat Al Abriyeen",
+    "location": "Al Hamra",
+    "category": "Dorf",
+    "shortDescription": "Ein zeitloses Bergdorf mit traditionellen Lehmhäusern und alten Falaj-Bewässerungssystemen.",
+    "longDescription": "Misfat Al Abriyeen ist ein einzigartiges Bergdorf, das auf 1.000 Metern Höhe in der Region Al Hamra liegt. Es ist berühmt für seine engen Gassen, traditionellen Lehmhäuser und üppigen Terrassengärten, die durch das antike Falaj-System bewässert werden. Es bietet ein seltenes Fenster in die historische omanische Lebensweise und einen atemberaubenden Blick auf die umliegenden Berge.",
+    "tags": [
+      "Berge",
+      "Kultur",
+      "Geschichte",
+      "Oase"
+    ],
+    "highlights": [
+      "Antikes Falaj-System",
+      "Traditionelle Architektur",
+      "Terrassengärten"
+    ]
+  },
+  {
+    "id": "wakan-village",
+    "title": "Wakan Village",
+    "location": "Nakhal",
+    "category": "Dorf",
+    "shortDescription": "Ein abgelegenes Dorf im Hajar-Gebirge, berühmt für blühende Aprikosenbäume und 700 Stufen.",
+    "longDescription": "Hoch im Hajar-Gebirge gelegen, ist Wakan Village nur mit einem Geländewagen erreichbar. Am schönsten ist es im Frühling, wenn die Obstbäume – besonders die Aprikosen – blühen. Ein Pfad mit 700 Stufen führt durch die terrassierten Farmen zu einem Aussichtspunkt, der einen Panoramablick auf das Wadi Mistal bietet.",
+    "tags": [
+      "Berge",
+      "Wandern",
+      "Natur"
+    ],
+    "highlights": [
+      "Aprikosenblüte",
+      "Pfad mit 700 Stufen",
+      "Panoramablick"
+    ]
+  },
+  {
+    "id": "wadi-al-arbeieen",
+    "title": "Wadi Al Arbeieen",
+    "location": "Sharqiyah",
+    "category": "Natur",
+    "shortDescription": "Eine unberührte Oase mit tiefen Pools und engen Schluchten, abseits der Massen.",
+    "longDescription": "Im Gegensatz zu bekannteren Wadis ist das Wadi Al Arbeieen wild und relativ ungestört geblieben. Es besticht durch dramatische Felsformationen, klare türkisfarbene Becken, die perfekt zum Schwimmen geeignet sind, und mehrere Wasserfälle, die tief in seinen engen Schluchten verborgen sind.",
+    "tags": [
+      "Wadi",
+      "Schwimmen",
+      "Abenteuer"
+    ],
+    "highlights": [
+      "Türkisfarbene Pools",
+      "Wasserfälle",
+      "Offroad-Zugang"
+    ]
+  },
+  {
+    "id": "sugar-dunes",
+    "title": "Zuckerdünen von Al Khaluf",
+    "location": "Al Khaluf",
+    "category": "Wüste",
+    "shortDescription": "Unerührte weiße Sanddünen, die direkt auf das Arabische Meer treffen.",
+    "longDescription": "Die Al Khaluf Dünen, auch bekannt als die 'Zuckerdünen', sind eine faszinierende Landschaft, in der schneeweiße Sandhügel direkt in das türkisfarbene Wasser des Arabischen Meeres abfallen. Es ist ein abgelegener und surrealer Ort, perfekt für Wildcamping und Sonnenuntergangsfotografie.",
+    "tags": [
+      "Wüste",
+      "Küste",
+      "Camping",
+      "Fotografie"
+    ],
+    "highlights": [
+      "Weiße Sanddünen",
+      "Wüste trifft Meer",
+      "Sternenhimmel"
+    ]
+  },
+  {
+    "id": "al-hamra-ruins",
+    "title": "Verlassenes Dorf von Al Hamra",
+    "location": "Al Hamra",
+    "category": "Geschichte",
+    "shortDescription": "Ruinen eines antiken Lehmziegeldorfes, das auf bis zu 1000 Jahre geschätzt wird.",
+    "longDescription": "Der alte Teil von Al Hamra besteht aus mehrstöckigen Lehmhäusern, die seit Jahrzehnten verlassen sind. Die Erkundung dieser Ruinen bietet einen gespenstisch schönen Einblick in die mittelalterliche omanische Stadtplanung und Architektur. Einige Häuser wurden in lebendige Museen wie das Bait Al Safah umgewandelt.",
+    "tags": [
+      "Geschichte",
+      "Architektur",
+      "Ruinen"
+    ],
+    "highlights": [
+      "Bait Al Safah Museum",
+      "Lehmziegelruinen",
+      "Antike Stadtstruktur"
+    ]
+  },
+  {
+    "id": "jebel-akhdar-hidden",
+    "title": "Versteckte Dörfer des Jebel Akhdar",
+    "location": "Ad Dakhiliyah",
+    "category": "Berge",
+    "shortDescription": "Abgelegene Terrassenfarmen, Granatapfelplantagen und verlassene Steingebäude.",
+    "longDescription": "Jenseits der großen Luxushotels des 'Grünen Berges' liegen versteckte Juwelen wie das Wadi Bani Habib. Diese Dörfer sind berühmt für ihre Granatapfel-, Walnuss- und Rosengärten. Die verlassenen Steinstrukturen der alten Dörfer bieten einen starken Kontrast zu den modernen Entwicklungen in der Nähe.",
+    "tags": [
+      "Berge",
+      "Landwirtschaft",
+      "Rosenwasser"
+    ],
+    "highlights": [
+      "Wadi Bani Habib",
+      "Rosen-Destillerien",
+      "Obstplantagen"
+    ]
+  },
+  {
+    "id": "wadi-damm",
+    "title": "Wadi Damm",
+    "location": "Bei Nizwa",
+    "category": "Natur",
+    "shortDescription": "Ein 'Märchen'-Wadi mit einzigartigen Felsformationen und wenigen Touristen.",
+    "longDescription": "Wadi Damm ist bekannt für seine glatten, wellenartigen Felsformationen und tiefen, klaren Becken. Es erfordert eine kleine Wanderung und etwas Kraxelei, was die Massen fernhält. Die oberen Pools sind besonders einsam und schön.",
+    "tags": [
+      "Wadi",
+      "Wandern",
+      "Abenteuer"
+    ],
+    "highlights": [
+      "Glatte Felsenpools",
+      "Einsames Schwimmen",
+      "Natürliche Schönheit"
+    ]
+  },
+  {
+    "id": "masirah-island",
+    "title": "Insel Masirah",
+    "location": "Ostküste",
+    "category": "Küste",
+    "shortDescription": "Eine abgelegene Insel, bekannt für Windsurfen, Kitesurfen und Schildkrötennistplätze.",
+    "longDescription": "Masirah ist Omans größte Insel, ein robuster und windiger Ort, der ein Paradies für Wildtiere ist. Sie ist weltweit bekannt für Kitesurfen und einer der wichtigsten Nistplätze für Unechte Karettschildkröten. Die Strände der Insel sind riesig und oft völlig leer.",
+    "tags": [
+      "Insel",
+      "Kitesurfen",
+      "Schildkröten",
+      "Wildtiere"
+    ],
+    "highlights": [
+      "Schildkrötennesting",
+      "Kitesurfen",
+      "Leere Strände"
+    ]
+  },
+  {
+    "id": "barr-al-hikman",
+    "title": "Barr Al Hikman",
+    "location": "Al Wusta",
+    "category": "Küste",
+    "shortDescription": "Oft als die 'Malediven des Oman' bezeichnet, mit atemberaubenden weißen Stränden.",
+    "longDescription": "Barr Al Hikman ist eine riesige Salzpfanne und Halbinsel, bekannt für ihren blendend weißen Sand und das unglaublich klare, flache Wasser. Es ist ein wichtiger Rastplatz für Zugvögel und bietet einige der besten Schnorchel- und Vogelbeobachtungsmöglichkeiten des Landes.",
+    "tags": [
+      "Küste",
+      "Vögel",
+      "Schnorcheln",
+      "Abgelegen"
+    ],
+    "highlights": [
+      "Zugvögel",
+      "Kristallklares Flachwasser",
+      "Weiße Strände"
+    ]
+  },
+  {
+    "id": "al-tahery-cave",
+    "title": "Al Tahery Höhle",
+    "location": "Östliches Hajar",
+    "category": "Abenteuer",
+    "shortDescription": "Ein riesiges Höhlensystem auf dem Salma-Plateau, beliebt bei Höhlenforschern.",
+    "longDescription": "Teil des umfangreichen Höhlensystems auf dem Salma-Plateau, ist die Al Tahery Höhle ein beeindruckendes Ziel für erfahrene Wanderer und Höhlenforscher. Der Eingang ist ein massiver Kalksteinbogen, und die inneren Kammern sind gewaltig.",
+    "tags": [
+      "Höhle",
+      "Abenteuer",
+      "Wandern"
+    ],
+    "highlights": [
+      "Kalksteinbögen",
+      "Höhlenerkundung",
+      "Hochplateau"
+    ]
+  },
+  {
+    "id": "wadi-nakhr-rim",
+    "title": "Wadi Nakhr Eastern Rim Trail",
+    "location": "Jebel Shams",
+    "category": "Berge",
+    "shortDescription": "Wandern Sie am Rande des Grand Canyon von Oman mit Blick auf Bergdörfer.",
+    "longDescription": "Während viele Besucher auf den Hauptaussichtspunkten des Jebel Shams bleiben, bietet der Eastern Rim Trail einen intimeren Blick auf den Grand Canyon von Oman. Der Weg führt am verlassenen Dorf Sap Bani Khamis vorbei, das gefährlich an der Canyonwand klebt.",
+    "tags": [
+      "Wandern",
+      "Canyon",
+      "Aussicht"
+    ],
+    "highlights": [
+      "Dorf Sap Bani Khamis",
+      "Canyon-Rand-Blick",
+      "Abenteuerwanderung"
+    ]
+  },
+  {
+    "id": "ras-madrakah",
+    "title": "Ras Madrakah Strand",
+    "location": "Duqm Küste",
+    "category": "Küste",
+    "shortDescription": "Goldener Sand und dramatische schwarze Felsformationen an der Südküste.",
+    "longDescription": "In Ras Madrakah trifft die Wüste auf dramatische Weise auf das Meer. Die Küstenlinie wird von dunklen, vulkanischen Felsformationen geprägt, die einen Kontrast zum hellen goldenen Sand bilden. Aufgrund der kühlen Brise und der Einsamkeit ist es ein beliebter Ort für Wildcamping.",
+    "tags": [
+      "Küste",
+      "Camping",
+      "Geologie"
+    ],
+    "highlights": [
+      "Schwarze Vulkanfelsen",
+      "Brandungsangeln",
+      "Wildcamping"
+    ]
+  },
+  {
+    "id": "bandar-al-khayran",
+    "title": "Bandar Al Khayran",
+    "location": "Muscat",
+    "category": "Küste",
+    "shortDescription": "Versteckte Lagunen und einsame Sandbuchten, ideal zum Kajakfahren.",
+    "longDescription": "Nur eine kurze Fahrt von Muscat entfernt, ist Bandar Al Khayran ein Netzwerk aus halb versunkenen Bergen, die wunderschöne Lagunen bilden. Es lässt sich am besten mit dem Boot oder Kajak erkunden und führt zu versteckten Stränden und Korallenriffen.",
+    "tags": [
+      "Küste",
+      "Muscat",
+      "Kajak",
+      "Schnorcheln"
+    ],
+    "highlights": [
+      "Versteckte Lagunen",
+      "Mangrovenwälder",
+      "Korallenriffe"
+    ]
+  },
+  {
+    "id": "frankincense-trail",
+    "title": "Dhofars Weihrauchstraße",
+    "location": "Salalah",
+    "category": "Geschichte",
+    "shortDescription": "Folgen Sie der antiken Handelsroute des Weihrauchs in der Region Dhofar.",
+    "longDescription": "Die Region Dhofar ist das Land des Weihrauchs. Die Route umfasst die UNESCO-Welterbestätten Al Baleed, Sumhuram und die Weihrauchbäume von Wadi Dawkah. Diese Stätten erzählen die Geschichte eines Handels, der den Oman einst zu einer der reichsten Regionen der Welt machte.",
+    "tags": [
+      "Geschichte",
+      "UNESCO",
+      "Kultur"
+    ],
+    "highlights": [
+      "Sumhuram Ruinen",
+      "Wadi Dawkah Bäume",
+      "Al Baleed Museum"
+    ]
+  },
+  {
+    "id": "ubar-lost-city",
+    "title": "Die verlorene Stadt Ubar (Wubar)",
+    "location": "Dhofar Wüste",
+    "category": "Geschichte",
+    "shortDescription": "Ein legendärer Handelsposten in der Wüste, wiederentdeckt durch Satellitenbilder.",
+    "longDescription": "Bekannt als das 'Atlantis der Wüste', war Ubar eine sagenumwobene Stadt, die jahrhundertelang unter den Dünen des Empty Quarter verloren war. Sie wurde 1992 mit Hilfe von Fernerkundungssatelliten wiederentdeckt. Heute können Besucher die archäologischen Ausgrabungen besichtigen.",
+    "tags": [
+      "Geschichte",
+      "Wüste",
+      "Archäologie"
+    ],
+    "highlights": [
+      "Archäologische Stätte",
+      "Rand des Empty Quarter",
+      "Legendäre Geschichte"
+    ]
+  },
+  {
+    "id": "beehive-tombs",
+    "title": "Bienenkorbgräber von Al Ayn",
+    "location": "Al Ayn",
+    "category": "Geschichte",
+    "shortDescription": "Bronzezeitliche Gräber auf einem Bergrücken vor der Kulisse des Jebel Misht.",
+    "longDescription": "Diese bemerkenswert erhaltenen Gräber stammen aus dem 3. Jahrtausend v. Chr. Sie wurden aus lokalem Stein erbaut, ähneln Bienenkörben und sind perfekt auf einem Bergrücken ausgerichtet. Der Blick auf die Gräber gegen den dramatischen Jebel Misht ist ikonisch.",
+    "tags": [
+      "Geschichte",
+      "Bronzezeit",
+      "UNESCO"
+    ],
+    "highlights": [
+      "Bronzezeitliche Geschichte",
+      "Lage auf dem Bergrücken",
+      "Jebel Misht Blick"
+    ]
+  },
+  {
+    "id": "mibam-village",
+    "title": "Mibam Village (Wadi Tiwi)",
+    "location": "Tiwi",
+    "category": "Natur",
+    "shortDescription": "Ein atemberaubendes Dorf tief im Wadi Tiwi mit Wasserfällen und Palmenhainen.",
+    "longDescription": "Während das Wadi Shab der berühmte Nachbar ist, ist das Wadi Tiwi tiefer und schroffer. Das Mibam Village liegt am Ende der befahrbaren Straße und bietet spektakuläre Wasserfälle sowie üppige Bananen- und Dattelplantagen.",
+    "tags": [
+      "Wadi",
+      "Wasserfall",
+      "Landwirtschaft"
+    ],
+    "highlights": [
+      "Mibam Wasserfall",
+      "Dattelpalmenhaine",
+      "Klippendorf"
+    ]
+  },
+  {
+    "id": "wajmah-village",
+    "title": "Dorf Wajmah",
+    "location": "Al Rustaq",
+    "category": "Dorf",
+    "shortDescription": "Ein historisches Bergdorf mit traditioneller omanischer Steinarchitektur.",
+    "longDescription": "Wajmah ist ein kleines Dorf, das in den Bergen bei Rustaq liegt. Es ist bekannt für seine gut erhaltenen Steinhäuser und das antike Falaj-System. Das Dorf ist sehr ruhig und bietet eine friedliche Alternative zu touristischeren Bergorten.",
+    "tags": [
+      "Berge",
+      "Kultur",
+      "Ruhe"
+    ],
+    "highlights": [
+      "Steinarchitektur",
+      "Friedliche Atmosphäre",
+      "Traditionelles Leben"
+    ]
+  },
+  {
+    "id": "pink-lake",
+    "title": "Der Pink Lake",
+    "location": "Al Jazir",
+    "category": "Natur",
+    "shortDescription": "Ein einzigartiges Naturphänomen, bei dem sich Lagunen rosa färben.",
+    "longDescription": "In bestimmten Gebieten der Küste von Al Wusta führen ein hoher Salzgehalt und spezifische Algen dazu, dass sich die Lagunen leuchtend rosa färben. Es ist ein atemberaubender Anblick, der wunderschön mit dem Blau des nahen Ozeans kontrastiert.",
+    "tags": [
+      "Natur",
+      "Phänomen",
+      "Küste"
+    ],
+    "highlights": [
+      "Leuchtend rosa Wasser",
+      "Fotospot",
+      "Einzigartige Ökologie"
+    ]
+  },
+  {
+    "id": "musandam-diving",
+    "title": "Musandam Remote Tauchen",
+    "category": "Abenteuer",
+    "shortDescription": "Erkunden Sie Korallengärten und Unterwasserhöhlen in den Musandam-Fjorden.",
+    "longDescription": "Jenseits der dhow-Kreuzfahrten von Khasab gibt es abgelegene Tauchplätze. Diese bieten dramatische Unterwasser-Steilwände, lebendige Korallenriffe und häufige Sichtungen von Delfinen und Rochen.",
+    "tags": [
+      "Tauchen",
+      "Meereslebewesen",
+      "Fjorde"
+    ],
+    "highlights": [
+      "Korallengärten",
+      "Delfinsichtungen",
+      "Unterwasserhöhlen"
+    ]
+  }
+]
