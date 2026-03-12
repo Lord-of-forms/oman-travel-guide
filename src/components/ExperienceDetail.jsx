@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, Sparkles, Loader2, Info, MessageSquare, Map as MapIcon, Mountain, Waves, Landmark, Palmtree, Tent, Check, Plus, Star } from 'lucide-react';
+import { X, Send, Sparkles, Loader2, Info, MessageSquare, Map as MapIcon, Mountain, Waves, Landmark, TreePalm, Tent, Check, Plus, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from 'react-markdown';
@@ -16,7 +16,8 @@ const ExperienceDetail = ({
     duration = 1,
     onDurationChange,
     note = "",
-    onNoteChange
+    onNoteChange,
+    destination = { name: 'Oman', country: 'Oman' }
 }) => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -50,12 +51,12 @@ const ExperienceDetail = ({
             const genAI = new GoogleGenerativeAI(apiKey);
             const model = genAI.getGenerativeModel({
                 model: selectedModel,
-                systemInstruction: "Du bist ein erfahrener Reiseführer für den Oman. Antworte IMMER auf Deutsch. Verwende Markdown für die Formatierung (Überschriften, Listen, Fettdruck). Sei präzise und gib Geheimtipps."
+                systemInstruction: `Du bist ein erfahrener Reiseführer für ${destination.name}. Antworte IMMER auf Deutsch. Verwende Markdown für die Formatierung (Überschriften, Listen, Fettdruck). Sei präzise und gib Geheimtipps.`
             });
 
             const prompt = `Kontext: ${experience.title} in ${experience.location}.
       Beschreibung: ${experience.longDescription}
-      Highlights: ${experience.highlights.join(", ")}
+      Highlights: ${(experience.highlights || []).join(", ")}
       
       Benutzerfrage: ${textToSend}`;
 
@@ -94,11 +95,24 @@ const ExperienceDetail = ({
 
     const CategoryIcon = ({ category, size = 24 }) => {
         switch (category?.toLowerCase()) {
-            case 'wüste': return <Tent size={size} />;
-            case 'wasser': return <Waves size={size} />;
-            case 'gebirge': return <Mountain size={size} />;
-            case 'kultur': return <Landmark size={size} />;
-            case 'küste': return <Palmtree size={size} />;
+            case 'wüste':
+            case 'desert':
+                return <Tent size={size} />;
+            case 'wasser':
+            case 'water':
+                return <Waves size={size} />;
+            case 'gebirge':
+            case 'mountain':
+            case 'mountains':
+                return <Mountain size={size} />;
+            case 'kultur':
+            case 'culture':
+            case 'history':
+                return <Landmark size={size} />;
+            case 'küste':
+            case 'coast':
+            case 'beach':
+                return <TreePalm size={size} />;
             default: return <Sparkles size={size} />;
         }
     };
@@ -147,7 +161,7 @@ const ExperienceDetail = ({
 
                         <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', marginBottom: '2rem' }}>
                             <a
-                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(experience.title + ' ' + experience.location + ' Oman')}`}
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(experience.title + ' ' + experience.location + ' ' + (experience.country || destination.country || ''))}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="maps-link"
@@ -215,7 +229,7 @@ const ExperienceDetail = ({
                         <div className="highlights-box">
                             <h3>Highlights</h3>
                             <ul>
-                                {experience.highlights.map((h, i) => (
+                                {(experience.highlights || []).map((h, i) => (
                                     <li key={i}>{h}</li>
                                 ))}
                             </ul>
@@ -243,7 +257,7 @@ const ExperienceDetail = ({
 
                         <div className="info-footer">
                             <Info size={16} />
-                            <span>Dieser Ort ist Teil der "Oman Unentdeckt" Kollektion.</span>
+                            <span>Dieser Ort ist Teil der &quot;{destination.name}&quot; Kollektion.</span>
                         </div>
                     </div>
 
