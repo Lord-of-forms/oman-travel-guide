@@ -49,5 +49,20 @@
   "notes.updated_at": "Last edited:",
   "packing.progress": "items packed",
   "packing.add_item": "Add item",
-  "packing.template": "Template"
+  "packing.template": "Template",
+  "weather.loading": "Loading weather data...",
+  "weather.no_key": "No OpenWeatherMap API key configured. Please add one in Settings.",
+  "weather.error": "Error loading weather data",
+  "weather.offline": "Offline – no cached weather data available.",
+  "weather.refresh": "Refresh",
+  "weather.updated": "Updated",
+  "weather.cached": "cached",
+  "weather.humidity": "Humidity",
+  "weather.wind": "Wind",
+  "currency.loading": "Loading exchange rates...",
+  "currency.swap": "Swap currencies",
+  "currency.updated": "Updated",
+  "currency.cached": "cached",
+  "currency.refresh": "Refresh",
+  "map.open": "Open"
 }

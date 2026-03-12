@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
 import experiencesData from './data/experiences.json';
 import { getDestinationById } from './data/destinations.js';
 import ExperienceGrid from './components/ExperienceGrid';
@@ -9,7 +9,7 @@ import CurrencyConverter from './components/CurrencyConverter';
 import PackingList from './components/PackingList';
 import { useLanguage } from './i18n/LanguageContext.jsx';
 import { getCurrencyForCountry } from './data/currencyMap.js';
-import { generateItineraryShareText, shareViaWhatsApp, shareViaEmail, copyToClipboard } from './utils/sharing.js';
+import { generateItineraryShareText, copyToClipboard } from './utils/sharing.js';
 import {
   CheckCircle,
   RefreshCw,
@@ -69,7 +69,7 @@ function App() {
   const destKey = `travel_guide_${currentDestinationId}`;
 
   const [activeTab, setActiveTab] = useState('discovery');
-  const [viewMode, setViewMode] = useState('grid');
+  const [viewMode] = useState('grid');
   const [selectedModel, setSelectedModel] = useState(() => {
     const saved = localStorage.getItem('gemini_selected_model');
     const validModels = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-1.5-pro'];
@@ -95,7 +95,7 @@ function App() {
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
   const [tripDuration, setTripDuration] = useState(7);
-  const [travelStyle, setTravelStyle] = useState('Ausgewogen');
+  const [travelStyle] = useState('Ausgewogen');
   const [transportType, setTransportType] = useState(() => localStorage.getItem(`${destKey}_transport`) || 'Mietwagen');
   const [avoidAreas, setAvoidAreas] = useState(() => localStorage.getItem(`${destKey}_avoid`) || '');
   const [personalRequirements, setPersonalRequirements] = useState(() => localStorage.getItem(`${destKey}_reqs`) || '');
@@ -107,15 +107,12 @@ function App() {
   const [customDurations, setCustomDurations] = useState(() => {
     return safeJsonParse(localStorage.getItem(`${destKey}_custom_durations`), {});
   });
-  const [aiSuggestions, setAiSuggestions] = useState({});
   const [placeNotes, setPlaceNotes] = useState(() => {
     return safeJsonParse(localStorage.getItem(`${destKey}_place_notes`), {});
   });
-  const [isSuggesting, setIsSuggesting] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [showArchive, setShowArchive] = useState(false);
   const [isResearching, setIsResearching] = useState(false);
   const [newPlaceName, setNewPlaceName] = useState('');
   const [showPackingList, setShowPackingList] = useState(false);
@@ -250,13 +247,13 @@ function App() {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({
         model: selectedModel,
-        systemInstruction: `Du bist ein spezialisierter Reise-Agent fuer ${currentDestination.name} (${currentDestination.country}). Erstelle fuer einen Ort ein PRAEZISES JSON. Pflichtfelder: title, location, category (Wueste, Wasser, Gebirge, Kultur, Kueste), country, shortDescription, longDescription, highlights (Array mit 4 Punkten), tags (Array mit 3-4 Tags). Gib NUR das JSON-Objekt ohne Erklaerungen aus.`
+        systemInstruction: `Du bist ein spezialisierter Reise-Agent für ${currentDestination.name} (${currentDestination.country}). Erstelle für einen Ort ein PRÄZISES JSON. Pflichtfelder: title, location, category (Wüste, Wasser, Gebirge, Kultur, Küste), country, shortDescription, longDescription, highlights (Array mit 4 Punkten), tags (Array mit 3-4 Tags). Gib NUR das JSON-Objekt ohne Erklärungen aus.`
       });
-      const result = await model.generateContent(`Recherchiere Details fuer diesen Ort in ${currentDestination.name}: ${newPlaceName}`);
+      const result = await model.generateContent(`Recherchiere Details für diesen Ort in ${currentDestination.name}: ${newPlaceName}`);
       const response = await result.response;
       let text = response.text().trim();
       const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) throw new Error("Kein gueltiges JSON gefunden.");
+      if (!jsonMatch) throw new Error("Kein gültiges JSON gefunden.");
       const generatedData = JSON.parse(jsonMatch[0]);
       setCustomPlaces(prev => [...prev, { ...generatedData, country: generatedData.country || currentDestination.country, id: `custom-${Date.now()}` }]);
       setNewPlaceName(''); setShowAddForm(false);
@@ -294,7 +291,7 @@ function App() {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({
         model: selectedModel,
-        systemInstruction: `Sortiere die Orte geografisch sinnvoll fuer eine ${currentDestination.name}-Rundreise. Gib NUR ein JSON-Array der IDs zurueck.`
+        systemInstruction: `Sortiere die Orte geografisch sinnvoll für eine ${currentDestination.name}-Rundreise. Gib NUR ein JSON-Array der IDs zurück.`
       });
       const placesText = selectedPlacesInOrder.map(p => `ID: ${p.id}, Titel: ${p.title}, Ort: ${p.location}`).join('\n');
       const result = await model.generateContent(`Sortiere:\n${placesText}`);
@@ -331,14 +328,14 @@ function App() {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({
         model: selectedModel,
-        systemInstruction: `Du bist ein professioneller ${currentDestination.name}-Reise-Experte. Erstelle einen Detailplan fuer ${tripDuration} Tage ab ${startDate}.
+        systemInstruction: `Du bist ein professioneller ${currentDestination.name}-Reise-Experte. Erstelle einen Detailplan für ${tripDuration} Tage ab ${startDate}.
         Reisestil: ${travelStyle}.
         Transportmittel: ${transportType}.
-        WICHTIG: Meide folgende Gebiete/Strassen: ${avoidAreas}.
-        Besondere Anforderungen/Wuensche: ${personalRequirements}.
+        WICHTIG: Meide folgende Gebiete/Straßen: ${avoidAreas}.
+        Besondere Anforderungen/Wünsche: ${personalRequirements}.
         Integriere diese spezifischen Erkenntnisse/Notizen zu den Orten:
         ${orderWithNotes}
-        Beruecksichtige Transport-spezifische Logistik (z.B. Fahrzeiten, 4x4 Erfordernisse).
+        Berücksichtige Transport-spezifische Logistik (z.B. Fahrzeiten, 4x4 Erfordernisse).
         Nutze Markdown und antworte auf Deutsch.`
       });
       const result = await model.generateContent(`Plan Details:\n${orderWithNotes}`);
@@ -387,15 +384,6 @@ function App() {
       swRegistration.waiting.postMessage('SKIP_WAITING');
     }
     window.location.reload();
-  };
-
-  const categoryLabels = {
-    'Alle': t('cat.all'),
-    'Wueste': t('cat.desert'),
-    'Wasser': t('cat.water'),
-    'Gebirge': t('cat.mountain'),
-    'Kultur': t('cat.culture'),
-    'Kueste': t('cat.coast'),
   };
 
   const getCatLabel = (cat) => {
@@ -632,7 +620,7 @@ function App() {
 
             <div className="experience-grid" style={{ marginTop: '2rem' }}>
               <div className="card"><h3>Visum</h3><p>Bis 14 Tage oft visafrei, sonst e-Visa noetig.</p></div>
-              <div className="card"><h3>Transport</h3><p>4x4 fuer Gebirge und Wueste empfohlen.</p></div>
+              <div className="card"><h3>Transport</h3><p>4x4 für Gebirge und Wüste empfohlen.</p></div>
               <div className="card"><h3>Klima</h3><p>Perfekte Reisezeit Oktober bis Maerz, angenehme Temperaturen.</p></div>
             </div>
           </motion.div>
@@ -722,11 +710,11 @@ function App() {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Regionen oder Strassen meiden</label>
+                  <label>Regionen oder Straßen meiden</label>
                   <input type="text" value={avoidAreas} onChange={e => setAvoidAreas(e.target.value)} placeholder="z.B. Bergpaesse..." />
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label>Besondere Anforderungen / Wuensche</label>
+                  <label>Besondere Anforderungen / Wünsche</label>
                   <textarea
                     value={personalRequirements}
                     onChange={e => setPersonalRequirements(e.target.value)}
@@ -781,7 +769,7 @@ function App() {
                 </div>
               </div>
               <div className="form-group" style={{ marginTop: '0.5rem' }}>
-                <label>Besondere Anforderungen / Wuensche</label>
+                <label>Besondere Anforderungen / Wünsche</label>
                 <textarea placeholder="z.B. Barrierefreiheit, vegetarisch..." value={personalRequirements} onChange={e => setPersonalRequirements(e.target.value)} style={{ minHeight: '80px' }} />
               </div>
               <button className="plan-btn" style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }} onClick={() => setShowOnboarding(false)}>{t('action.start_adventure')}</button>

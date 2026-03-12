@@ -48,6 +48,21 @@
   "share.copied": "Link kopiert!",
   "notes.updated_at": "Zuletzt bearbeitet:",
   "packing.progress": "Gegenstände eingepackt",
-  "packing.add_item": "Item hinzufügen",
-  "packing.template": "Vorlage"
+  "packing.add_item": "Artikel hinzufügen",
+  "packing.template": "Vorlage",
+  "weather.loading": "Lade Wetterdaten...",
+  "weather.no_key": "Kein OpenWeatherMap API Key konfiguriert. Bitte in den Einstellungen hinzufügen.",
+  "weather.error": "Fehler beim Laden der Wetterdaten",
+  "weather.offline": "Offline – keine gecachten Wetterdaten verfügbar.",
+  "weather.refresh": "Aktualisieren",
+  "weather.updated": "Aktualisiert",
+  "weather.cached": "gecacht",
+  "weather.humidity": "Luftfeuchtigkeit",
+  "weather.wind": "Wind",
+  "currency.loading": "Lade Wechselkurse...",
+  "currency.swap": "Währungen tauschen",
+  "currency.updated": "Aktualisiert",
+  "currency.cached": "gecacht",
+  "currency.refresh": "Aktualisieren",
+  "map.open": "Öffnen"
 }

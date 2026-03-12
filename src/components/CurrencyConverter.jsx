@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRightLeft, RefreshCw, WifiOff } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -23,7 +24,7 @@ function loadRatesCache(base) {
 function saveRatesCache(base, data) {
   try {
     localStorage.setItem(getCacheKey(base), JSON.stringify({ ...data, timestamp: Date.now() }));
-  } catch {}
+  } catch (_e) { /* ignore */ }
 }
 
 const CURRENCY_SYMBOLS = {
@@ -34,6 +35,7 @@ const CURRENCY_SYMBOLS = {
 };
 
 const CurrencyConverter = ({ destinationCurrency = 'OMR', homeCurrency = 'EUR' }) => {
+  const { t } = useLanguage();
   const [rates, setRates] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -80,6 +82,7 @@ const CurrencyConverter = ({ destinationCurrency = 'OMR', homeCurrency = 'EUR' }
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchRates(); }, [fromCurrency]);
 
   const convertedAmount = rates && amount
@@ -106,7 +109,7 @@ const CurrencyConverter = ({ destinationCurrency = 'OMR', homeCurrency = 'EUR' }
       {loading && (
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.5, padding: '0.5rem 0' }}>
           <RefreshCw size={14} className="animate-spin" />
-          <span style={{ fontSize: '0.85rem' }}>Lade Kurse...</span>
+          <span style={{ fontSize: '0.85rem' }}>{t('currency.loading')}</span>
         </div>
       )}
 
@@ -138,7 +141,7 @@ const CurrencyConverter = ({ destinationCurrency = 'OMR', homeCurrency = 'EUR' }
             <button
               className="currency-swap-btn"
               onClick={() => setSwapped(s => !s)}
-              title="Tauschen"
+              title={t('currency.swap')}
             >
               <ArrowRightLeft size={16} />
             </button>

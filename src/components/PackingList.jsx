@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { packingTemplates, suggestTemplate } from '../data/packingTemplates';
 import { ChevronDown, ChevronRight, Plus, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -28,27 +28,19 @@ const PackingList = ({ destination, locale = 'de' }) => {
     try {
       const raw = localStorage.getItem(getStorageKey(destId));
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch (_e) { /* ignore */ }
     return buildInitialList(suggestedKey);
   });
   const [newItemInputs, setNewItemInputs] = useState({});
-  const didInitRef = useRef(false);
 
   // Persist state
   useEffect(() => {
     try {
       localStorage.setItem(getStorageKey(destId), JSON.stringify(sections));
-    } catch {}
+    } catch (_e) { /* ignore */ }
   }, [sections, destId]);
 
-  // Reset to template on first load only if no saved state
-  useEffect(() => {
-    if (!didInitRef.current) {
-      didInitRef.current = true;
-      const raw = localStorage.getItem(getStorageKey(destId));
-      if (!raw) setSections(buildInitialList(suggestedKey));
-    }
-  }, [destId, suggestedKey]);
+  // Reset to template on first load only if no saved state - handled by useState initializer above
 
   const totalItems = sections.reduce((sum, s) => sum + s.items.length, 0);
   const checkedItems = sections.reduce((sum, s) => sum + s.items.filter(i => i.checked).length, 0);

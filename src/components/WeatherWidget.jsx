@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Cloud, Wind, Droplets, Thermometer, RefreshCw, WifiOff } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
@@ -23,7 +24,7 @@ function loadCache(destId) {
 function saveCache(destId, data) {
   try {
     localStorage.setItem(getCacheKey(destId), JSON.stringify({ ...data, timestamp: Date.now() }));
-  } catch {}
+  } catch (_e) { /* ignore */ }
 }
 
 const WEATHER_ICONS = {
@@ -52,6 +53,7 @@ function groupForecastByDay(list) {
 }
 
 const WeatherWidget = ({ destination, apiKey }) => {
+  const { t } = useLanguage();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -115,13 +117,14 @@ const WeatherWidget = ({ destination, apiKey }) => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchWeather(); }, [apiKey, destId]);
 
   if (!apiKey) {
     return (
       <motion.div className="weather-widget weather-no-key" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Cloud size={32} style={{ opacity: 0.4, marginBottom: '0.5rem' }} />
-        <p style={{ opacity: 0.6, fontSize: '0.9rem' }}>Fügen Sie einen <strong>OpenWeatherMap API Key</strong> in den Einstellungen hinzu, um das Wetter anzuzeigen.</p>
+        <p style={{ opacity: 0.6, fontSize: '0.9rem' }}>{t('weather.no_key')}</p>
       </motion.div>
     );
   }
@@ -130,7 +133,7 @@ const WeatherWidget = ({ destination, apiKey }) => {
     return (
       <motion.div className="weather-widget weather-loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <RefreshCw size={24} className="animate-spin" style={{ opacity: 0.5 }} />
-        <span style={{ opacity: 0.5, marginLeft: '0.5rem' }}>Lade Wetterdaten...</span>
+        <span style={{ opacity: 0.5, marginLeft: '0.5rem' }}>{t('weather.loading')}</span>
       </motion.div>
     );
   }
@@ -167,7 +170,7 @@ const WeatherWidget = ({ destination, apiKey }) => {
             </span>
           )}
         </div>
-        <button className="restore-btn" onClick={() => fetchWeather(true)} title="Aktualisieren">
+        <button className="restore-btn" onClick={() => fetchWeather(true)} title={t('weather.refresh')}>
           <RefreshCw size={14} />
         </button>
       </div>

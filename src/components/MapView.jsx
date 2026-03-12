@@ -2,6 +2,7 @@ import React from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 // Fix Leaflet Vite icon bug
 delete L.Icon.Default.prototype._getIconUrl;
@@ -29,6 +30,7 @@ function getCategoryColor(category) {
 }
 
 const MapView = ({ experiences = [], destination, onDetailOpen }) => {
+  const { t } = useLanguage();
   const centerLat = destination?.centerLat || 22.5;
   const centerLng = destination?.centerLng || 57.5;
   const placesWithCoords = experiences.filter(e => e.lat != null && e.lng != null);
@@ -69,7 +71,7 @@ const MapView = ({ experiences = [], destination, onDetailOpen }) => {
                     className="map-popup-btn"
                     onClick={() => onDetailOpen && onDetailOpen(exp)}
                   >
-                    Öffnen
+                    {t('map.open')}
                   </button>
                 </div>
               </Popup>

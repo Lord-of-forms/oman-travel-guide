@@ -33,6 +33,7 @@ const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel 
             }, 2500);
         }
         return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGeneratingPlaces]);
 
     const handleAnswer = async (answer) => {
@@ -64,7 +65,7 @@ const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel 
                 try {
                     const data = JSON.parse(rawText);
                     setMessages(prev => [...prev, { role: 'ai', content: data.text, options: data.options }]);
-                } catch (e) {
+                } catch (_e) {
                     // Fallback if AI doesn't send JSON
                     setMessages(prev => [...prev, { role: 'ai', content: "Was interessiert dich als Nächstes?", options: ["Kultur & Geschichte", "Outdoor & Action", "Entspannung"] }]);
                 }
