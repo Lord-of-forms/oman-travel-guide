@@ -2,18 +2,18 @@
     "name": "Travel Guide",
     "short_name": "TravelGuide",
     "description": "Ihr intelligenter Reisebegleiter für jedes Ziel weltweit",
-    "start_url": "/",
+    "start_url": "/travel-guide/",
     "display": "standalone",
     "background_color": "#0a0c10",
     "theme_color": "#d4af37",
     "icons": [
         {
-            "src": "/assets/icons/icon-192.png",
+            "src": "/travel-guide/assets/icons/icon-192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/assets/icons/icon-512.png",
+            "src": "/travel-guide/assets/icons/icon-512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
