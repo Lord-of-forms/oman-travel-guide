@@ -3,9 +3,9 @@ import { X, Send, Sparkles, Loader2, Compass, MessageSquare } from 'lucide-react
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel = "gemini-3-flash-preview" }) => {
+const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel = "gemini-3-flash-preview", destination = { name: 'Oman', country: 'Oman' } }) => {
     const [messages, setMessages] = useState([
-        { role: 'ai', content: 'Hallo! Ich bin dein Oman-Entdecker. Lass uns in 4 schnellen Schritten Geheimtipps finden.\n\n**Schritt 1:** Welches Terrain reizt dich am meisten?', options: ["Wüste & Dünen", "Gebirge & Canyons", "Wadis & Oasen", "Küsten & Strände"] }
+        { role: 'ai', content: `Hallo! Ich bin dein ${destination.name}-Entdecker. Lass uns in 4 schnellen Schritten Geheimtipps finden.\n\n**Schritt 1:** Welches Terrain reizt dich am meisten?`, options: ["Wüste & Dünen", "Gebirge & Canyons", "Wadis & Oasen", "Küsten & Strände"] }
     ]);
     const [history, setHistory] = useState([]); // To track previous states for "Back"
     const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel 
             const genAI = new GoogleGenerativeAI(apiKey);
             const model = genAI.getGenerativeModel({
                 model: selectedModel,
-                systemInstruction: "Du bist ein erfahrener Oman-Reise-Guide. Antworte IMMER im JSON-Format für Fragen. Für Schritt 2-4: Gib ein JSON { \"text\": \"Deine Frage\", \"options\": [\"Option 1\", \"Option 2\", ...] } zurück. Kurz und präzise auf Deutsch."
+                systemInstruction: `Du bist ein erfahrener ${destination.name}-Reise-Guide. Antworte IMMER im JSON-Format für Fragen. ${destination.aiLanguageInstruction || 'Antworte IMMER auf Deutsch.'} Für Schritt 2-4: Gib ein JSON { "text": "Deine Frage", "options": ["Option 1", "Option 2", ...] } zurück. Kurz und präzise.`
             });
 
             if (newCount <= 4) {
@@ -70,8 +70,8 @@ const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel 
                 }
             } else {
                 setIsGeneratingPlaces(true);
-                const discoveryPrompt = `Präferenzen: ${JSON.stringify([...messages, userMsg])}\nFinde 4 authentische, spezifische Geheimtipps im Oman. 
-                ANTWORTE NUR MIT EINEM JSON-ARRAY: [{ "title": "...", "location": "...", "category": "...", "shortDescription": "...", "longDescription": "...", "tags": [], "highlights": [] }]`;
+                const discoveryPrompt = `Präferenzen: ${JSON.stringify([...messages, userMsg])}\nFinde 4 authentische, spezifische Geheimtipps in ${destination.name} (${destination.country}). 
+                ANTWORTE NUR MIT EINEM JSON-ARRAY: [{ "title": "...", "location": "...", "category": "...", "country": "${destination.country}", "shortDescription": "...", "longDescription": "...", "tags": [], "highlights": [] }]`;
 
                 const result = await model.generateContent(discoveryPrompt);
                 const response = await result.response;

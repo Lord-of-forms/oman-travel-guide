@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import experiencesData from './data/experiences.json';
+import { getDestinationById } from './data/destinations.js';
 import ExperienceGrid from './components/ExperienceGrid';
 import ExperienceDetail from './components/ExperienceDetail';
 import ExperienceWizard from './components/ExperienceWizard';
@@ -30,7 +31,22 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 
+function safeJsonParse(str, fallback) {
+  try {
+    return str ? JSON.parse(str) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function App() {
+  // --- Destination ---
+  const [currentDestinationId] = useState(() => {
+    return localStorage.getItem('travel_guide_destination') || 'oman';
+  });
+  const currentDestination = getDestinationById(currentDestinationId);
+  const destKey = `travel_guide_${currentDestinationId}`;
+
   // --- States ---
   const [activeTab, setActiveTab] = useState('discovery'); // discovery, planner, guide, settings
   const [viewMode, setViewMode] = useState('grid');
@@ -44,12 +60,10 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [customPlaces, setCustomPlaces] = useState(() => {
-    const saved = localStorage.getItem('oman_custom_places');
-    return saved ? JSON.parse(saved) : [];
+    return safeJsonParse(localStorage.getItem(`${destKey}_custom_places`), []);
   });
   const [hiddenIds, setHiddenIds] = useState(() => {
-    const saved = localStorage.getItem('oman_hidden_ids');
-    return saved ? JSON.parse(saved) : [];
+    return safeJsonParse(localStorage.getItem(`${destKey}_hidden_ids`), []);
   });
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -59,23 +73,20 @@ function App() {
   const [selectedIds, setSelectedIds] = useState([]);
   const [tripDuration, setTripDuration] = useState(7);
   const [travelStyle, setTravelStyle] = useState('Ausgewogen');
-  const [transportType, setTransportType] = useState(() => localStorage.getItem('oman_transport') || 'Mietwagen');
-  const [avoidAreas, setAvoidAreas] = useState(() => localStorage.getItem('oman_avoid') || '');
-  const [personalRequirements, setPersonalRequirements] = useState(() => localStorage.getItem('oman_reqs') || '');
+  const [transportType, setTransportType] = useState(() => localStorage.getItem(`${destKey}_transport`) || 'Mietwagen');
+  const [avoidAreas, setAvoidAreas] = useState(() => localStorage.getItem(`${destKey}_avoid`) || '');
+  const [personalRequirements, setPersonalRequirements] = useState(() => localStorage.getItem(`${destKey}_reqs`) || '');
   const [itinerary, setItinerary] = useState(null);
 
   const [ratings, setRatings] = useState(() => {
-    const saved = localStorage.getItem('oman_ratings');
-    return saved ? JSON.parse(saved) : {};
+    return safeJsonParse(localStorage.getItem(`${destKey}_ratings`), {});
   });
   const [customDurations, setCustomDurations] = useState(() => {
-    const saved = localStorage.getItem('oman_custom_durations');
-    return saved ? JSON.parse(saved) : {};
+    return safeJsonParse(localStorage.getItem(`${destKey}_custom_durations`), {});
   });
   const [aiSuggestions, setAiSuggestions] = useState({});
   const [placeNotes, setPlaceNotes] = useState(() => {
-    const saved = localStorage.getItem('oman_place_notes');
-    return saved ? JSON.parse(saved) : {};
+    return safeJsonParse(localStorage.getItem(`${destKey}_place_notes`), {});
   });
   const [isSuggesting, setIsSuggesting] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -86,10 +97,10 @@ function App() {
   const [newPlaceName, setNewPlaceName] = useState('');
 
   const [startDate, setStartDate] = useState(() => {
-    return localStorage.getItem('oman_start_date') || '2026-11-01';
+    return localStorage.getItem(`${destKey}_start_date`) || '2026-11-01';
   });
   const [showOnboarding, setShowOnboarding] = useState(() => {
-    return !localStorage.getItem('oman_onboarding_done');
+    return !localStorage.getItem(`${destKey}_onboarding_done`);
   });
   const [showDatePrompt, setShowDatePrompt] = useState(false);
   const [pendingId, setPendingId] = useState(null);
@@ -104,7 +115,7 @@ function App() {
       .filter(exp =>
         exp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         exp.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        exp.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
+        (exp.tags || []).some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
       );
   }, [allExperiences, hiddenIds, selectedCategory, searchQuery]);
 
@@ -129,19 +140,19 @@ function App() {
   };
 
   // --- Persistence ---
-  useEffect(() => localStorage.setItem('oman_custom_places', JSON.stringify(customPlaces)), [customPlaces]);
-  useEffect(() => localStorage.setItem('oman_hidden_ids', JSON.stringify(hiddenIds)), [hiddenIds]);
-  useEffect(() => localStorage.setItem('oman_ratings', JSON.stringify(ratings)), [ratings]);
-  useEffect(() => localStorage.setItem('oman_custom_durations', JSON.stringify(customDurations)), [customDurations]);
+  useEffect(() => localStorage.setItem(`${destKey}_custom_places`, JSON.stringify(customPlaces)), [customPlaces, destKey]);
+  useEffect(() => localStorage.setItem(`${destKey}_hidden_ids`, JSON.stringify(hiddenIds)), [hiddenIds, destKey]);
+  useEffect(() => localStorage.setItem(`${destKey}_ratings`, JSON.stringify(ratings)), [ratings, destKey]);
+  useEffect(() => localStorage.setItem(`${destKey}_custom_durations`, JSON.stringify(customDurations)), [customDurations, destKey]);
   useEffect(() => localStorage.setItem('gemini_selected_model', selectedModel), [selectedModel]);
-  useEffect(() => localStorage.setItem('oman_start_date', startDate), [startDate]);
-  useEffect(() => localStorage.setItem('oman_transport', transportType), [transportType]);
-  useEffect(() => localStorage.setItem('oman_avoid', avoidAreas), [avoidAreas]);
-  useEffect(() => localStorage.setItem('oman_reqs', personalRequirements), [personalRequirements]);
-  useEffect(() => localStorage.setItem('oman_place_notes', JSON.stringify(placeNotes)), [placeNotes]);
+  useEffect(() => localStorage.setItem(`${destKey}_start_date`, startDate), [startDate, destKey]);
+  useEffect(() => localStorage.setItem(`${destKey}_transport`, transportType), [transportType, destKey]);
+  useEffect(() => localStorage.setItem(`${destKey}_avoid`, avoidAreas), [avoidAreas, destKey]);
+  useEffect(() => localStorage.setItem(`${destKey}_reqs`, personalRequirements), [personalRequirements, destKey]);
+  useEffect(() => localStorage.setItem(`${destKey}_place_notes`, JSON.stringify(placeNotes)), [placeNotes, destKey]);
   useEffect(() => {
-    if (!showOnboarding) localStorage.setItem('oman_onboarding_done', 'true');
-  }, [showOnboarding]);
+    if (!showOnboarding) localStorage.setItem(`${destKey}_onboarding_done`, 'true');
+  }, [showOnboarding, destKey]);
 
   // --- Actions ---
   const validateKey = useCallback(async (key) => {
@@ -182,15 +193,15 @@ function App() {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({
         model: selectedModel,
-        systemInstruction: "Du bist ein spezialisierter Reise-Agent für den Oman. Erstelle für einen Ort ein PRÄZISES JSON. Pflichtfelder: title, location, category (Wüste, Wasser, Gebirge, Kultur, Küste), shortDescription, longDescription, highlights (Array mit 4 Punkten), tags (Array mit 3-4 Tags). Gib NUR das JSON-Objekt ohne Erklärungen aus."
+        systemInstruction: `Du bist ein spezialisierter Reise-Agent für ${currentDestination.name} (${currentDestination.country}). Erstelle für einen Ort ein PRÄZISES JSON. Pflichtfelder: title, location, category (Wüste, Wasser, Gebirge, Kultur, Küste), country, shortDescription, longDescription, highlights (Array mit 4 Punkten), tags (Array mit 3-4 Tags). Gib NUR das JSON-Objekt ohne Erklärungen aus.`
       });
-      const result = await model.generateContent(`Recherchiere Details für diesen Ort im Oman: ${newPlaceName}`);
+      const result = await model.generateContent(`Recherchiere Details für diesen Ort in ${currentDestination.name}: ${newPlaceName}`);
       const response = await result.response;
       let text = response.text().trim();
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (!jsonMatch) throw new Error("Kein gültiges JSON gefunden.");
       const generatedData = JSON.parse(jsonMatch[0]);
-      setCustomPlaces(prev => [...prev, { ...generatedData, id: `custom-${Date.now()}` }]);
+      setCustomPlaces(prev => [...prev, { ...generatedData, country: generatedData.country || currentDestination.country, id: `custom-${Date.now()}` }]);
       setNewPlaceName(''); setShowAddForm(false);
     } catch (error) {
       console.error("Research Error:", error);
@@ -226,7 +237,7 @@ function App() {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({
         model: selectedModel,
-        systemInstruction: "Sortiere die Orte geografisch sinnvoll für eine Oman-Rundreise. Gib NUR ein JSON-Array der IDs zurück."
+        systemInstruction: `Sortiere die Orte geografisch sinnvoll für eine ${currentDestination.name}-Rundreise. Gib NUR ein JSON-Array der IDs zurück.`
       });
       const placesText = selectedPlacesInOrder.map(p => `ID: ${p.id}, Titel: ${p.title}, Ort: ${p.location}`).join('\n');
       const result = await model.generateContent(`Sortiere:\n${placesText}`);
@@ -235,6 +246,18 @@ function App() {
       if (match) setSelectedIds(JSON.parse(match[0]).filter(id => selectedIds.includes(id)));
     } catch (error) { setErrorMessage(`Optimierung fehlgeschlagen: ${error.message}`); }
     finally { setIsGenerating(false); }
+  };
+
+  const openInGoogleMaps = () => {
+    if (selectedIds.length === 0) return;
+    const places = selectedPlacesInOrder;
+    if (places.length === 1) {
+      const p = places[0];
+      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.title + ' ' + p.location + ' ' + (p.country || currentDestination.country))}`, '_blank');
+    } else {
+      const waypoints = places.map(p => encodeURIComponent(p.title + ', ' + p.location)).join('/');
+      window.open(`https://www.google.com/maps/dir/${waypoints}`, '_blank');
+    }
   };
 
   const handleRate = (id, score) => setRatings(prev => ({ ...prev, [id]: score }));
@@ -268,7 +291,7 @@ function App() {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({
         model: selectedModel,
-        systemInstruction: `Du bist ein professioneller Oman-Reise-Experte. Erstelle einen Detailplan für ${tripDuration} Tage ab ${startDate}.
+        systemInstruction: `Du bist ein professioneller ${currentDestination.name}-Reise-Experte. Erstelle einen Detailplan für ${tripDuration} Tage ab ${startDate}.
         Reisestil: ${travelStyle}.
         Transportmittel: ${transportType}.
         WICHTIG: Meide folgende Gebiete/Straßen: ${avoidAreas}.
@@ -296,14 +319,15 @@ function App() {
     <div className="app-container">
       <header className="main-header">
         <div className="header-brand">
-          <h1>Oman Unentdeckt</h1>
+          <h1>Travel Guide</h1>
+          <span className="destination-badge">{currentDestination.emoji} {currentDestination.name}</span>
         </div>
 
         <nav className="tab-navigation">
-          <button className={`nav-item ${activeTab === 'discovery' ? 'active' : ''}`} onClick={() => setActiveTab('discovery')}><Compass size={18} /> Entdecken</button>
-          <button className={`nav-item ${activeTab === 'planner' ? 'active' : ''}`} onClick={() => setActiveTab('planner')}><Navigation size={18} /> Reiseplaner {selectedIds.length > 0 && `(${selectedIds.length})`}</button>
-          <button className={`nav-item ${activeTab === 'guide' ? 'active' : ''}`} onClick={() => setActiveTab('guide')}><ShieldAlert size={18} /> Reise-Info</button>
-          <button className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}><Settings size={18} /> Einstellungen</button>
+          <button className={`nav-item ${activeTab === 'discovery' ? 'active' : ''}`} onClick={() => { setActiveTab('discovery'); window.scrollTo(0, 0); }}><Compass size={18} /> Entdecken</button>
+          <button className={`nav-item ${activeTab === 'planner' ? 'active' : ''}`} onClick={() => { setActiveTab('planner'); window.scrollTo(0, 0); }}><Navigation size={18} /> Reiseplaner {selectedIds.length > 0 && `(${selectedIds.length})`}</button>
+          <button className={`nav-item ${activeTab === 'guide' ? 'active' : ''}`} onClick={() => { setActiveTab('guide'); window.scrollTo(0, 0); }}><ShieldAlert size={18} /> Reise-Info</button>
+          <button className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => { setActiveTab('settings'); window.scrollTo(0, 0); }}><Settings size={18} /> Einstellungen</button>
         </nav>
 
         <div className="header-status">
@@ -320,23 +344,40 @@ function App() {
                 <input type="text" placeholder="Suche..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
               </div>
               <div className="filter-chips">
-                {['Alle', 'Wüste', 'Wasser', 'Gebirge', 'Kultur', 'Küste'].map(cat => (
+                {['Alle', ...currentDestination.categories].map(cat => (
                   <button key={cat} className={`chip ${selectedCategory === cat ? 'active' : ''}`} onClick={() => setSelectedCategory(cat)}>{cat}</button>
                 ))}
                 <button className="secondary-btn" onClick={() => setShowAddForm(true)}><Plus size={16} /> KI-Recherche</button>
                 <button className="discovery-btn" onClick={() => setShowWizard(true)}><Sparkles size={16} /> KI-Wegweiser</button>
               </div>
             </div>
-            <ExperienceGrid
-              experiences={filteredExperiences}
-              onDetailOpen={setSelectedExperience}
-              selectedIds={selectedIds}
-              onToggleSelection={toggleSelection}
-              onRemove={removePlace}
-              ratings={ratings}
-              onRate={handleRate}
-              viewMode={viewMode}
-            />
+            {filteredExperiences.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '4rem 2rem', opacity: 0.6 }}>
+                <Search size={48} style={{ marginBottom: '1rem', opacity: 0.3 }} />
+                <h3>Keine Orte gefunden</h3>
+                <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                  {searchQuery || selectedCategory !== 'Alle'
+                    ? 'Versuchen Sie einen anderen Suchbegriff oder wählen Sie eine andere Kategorie.'
+                    : 'Noch keine Orte vorhanden. Nutzen Sie den KI-Wegweiser, um Geheimtipps zu entdecken.'}
+                </p>
+                {(searchQuery || selectedCategory !== 'Alle') && (
+                  <button className="secondary-btn" style={{ marginTop: '1rem' }} onClick={() => { setSearchQuery(''); setSelectedCategory('Alle'); }}>
+                    Filter zurücksetzen
+                  </button>
+                )}
+              </div>
+            ) : (
+              <ExperienceGrid
+                experiences={filteredExperiences}
+                onDetailOpen={setSelectedExperience}
+                selectedIds={selectedIds}
+                onToggleSelection={toggleSelection}
+                onRemove={removePlace}
+                ratings={ratings}
+                onRate={handleRate}
+                viewMode={viewMode}
+              />
+            )}
           </motion.div>
         )}
 
@@ -400,8 +441,26 @@ function App() {
               <h2><Settings size={20} /> API-Einstellungen</h2>
               <div className="settings-card">
                 <label>Gemini API Key</label>
-                <input type="password" value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Key hier einfügen..." />
-                <div className={`api-status-banner ${apiStatus}`}>{apiStatus === 'success' ? 'API Bereit' : 'API Fehler / Nicht konfiguriert'}</div>
+                <p style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '0.75rem' }}>
+                  Holen Sie sich einen kostenlosen API-Key unter{' '}
+                  <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)' }}>
+                    aistudio.google.com
+                  </a>
+                </p>
+                <input
+                  type="password"
+                  value={apiKey}
+                  onChange={e => setApiKey(e.target.value)}
+                  placeholder="Key hier einfügen..."
+                />
+                {apiKey && apiStatus === 'success' && (
+                  <div style={{ fontSize: '0.8rem', opacity: 0.6, marginTop: '0.4rem' }}>
+                    Verbunden: {apiKey.substring(0, 6)}...{apiKey.substring(apiKey.length - 4)}
+                  </div>
+                )}
+                <div className={`api-status-banner ${apiStatus}`}>
+                  {apiStatus === 'success' ? '✅ API Bereit' : apiStatus === 'checking' ? '⏳ Prüfe...' : apiStatus === 'error' ? `❌ ${errorMessage || 'API Fehler'}` : 'API nicht konfiguriert'}
+                </div>
               </div>
 
               <div className="settings-card" style={{ marginTop: '1rem' }}>
@@ -452,7 +511,7 @@ function App() {
           <motion.div className="modal-overlay" style={{ zIndex: 5000 }}>
             <motion.div className="modal-content" style={{ padding: '2.5rem', maxWidth: '700px', height: 'auto', display: 'block' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <h2 style={{ margin: 0 }}>Reiseplanung Oman 2026</h2>
+                <h2 style={{ margin: 0 }}>Reiseplanung {currentDestination.name}</h2>
                 <button className="close-btn-mini" onClick={() => setShowOnboarding(false)}><X size={20} /></button>
               </div>
 
@@ -527,9 +586,10 @@ function App() {
             onDurationChange={(id, val) => setCustomDurations(prev => ({ ...prev, [id]: val }))}
             note={placeNotes[selectedExperience.id] || ""}
             onNoteChange={(id, val) => setPlaceNotes(prev => ({ ...prev, [id]: val }))}
+            destination={currentDestination}
           />
         )}
-        {showWizard && <ExperienceWizard onClose={() => setShowWizard(false)} onDiscoveryComplete={handleDiscoveryComplete} apiKey={apiKey} selectedModel={selectedModel} />}
+        {showWizard && <ExperienceWizard onClose={() => setShowWizard(false)} onDiscoveryComplete={handleDiscoveryComplete} apiKey={apiKey} selectedModel={selectedModel} destination={currentDestination} />}
       </AnimatePresence>
     </div>
   );

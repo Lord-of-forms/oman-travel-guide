@@ -1657,3 +1657,95 @@ header p {
     opacity: 0.8;
   }
 }
+/* ========================================
+   MULTI-DESTINATION & UX ADDITIONS
+   ======================================== */
+
+/* Destination badge in header */
+.destination-badge {
+  font-size: 0.75rem;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--accent-gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+
+/* ========================================
+   MOBILE OPTIMIZATION FIXES
+   ======================================== */
+
+/* Fix grid for very narrow screens (< 320px) */
+.experience-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+
+/* Fix modal height for iOS (100dvh) */
+.modal-content {
+  height: 85dvh;
+}
+
+/* Touch-friendly interactive elements (min 44x44px) */
+.remove-btn {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  opacity: 1;
+}
+
+.selection-indicator {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+}
+
+/* Minimum readable font size */
+@media (max-width: 480px) {
+  .tag {
+    font-size: 0.875rem !important;
+  }
+
+  .card-content p {
+    font-size: 0.875rem;
+  }
+
+  /* Horizontal scrollable tabs on mobile */
+  .tab-navigation {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap !important;
+    padding-bottom: 2px;
+  }
+
+  .tab-navigation::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Safe area insets for notched devices */
+  .main-header {
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .content-container {
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Webkit prefix for backdrop-filter compatibility */
+.main-header,
+.modal-content,
+.wizard-content {
+  -webkit-backdrop-filter: blur(20px);
+}
