@@ -2,10 +2,13 @@
     "name": "Travel Guide",
     "short_name": "TravelGuide",
     "description": "Ihr intelligenter Reisebegleiter für jedes Ziel weltweit",
-    "start_url": "/",
+    "start_url": "/travel-guide-app/",
+    "scope": "/travel-guide-app/",
     "display": "standalone",
     "background_color": "#0a0c10",
     "theme_color": "#d4af37",
+    "orientation": "portrait-primary",
+    "lang": "de",
     "icons": [
         {
             "src": "/assets/icons/icon-192.png",
