@@ -22,8 +22,8 @@ Dieses Dokument bietet eine Übersicht über alle implementierten Funktionen, di
 *   **Archivsystem**: Orte können ausgeblendet (archiviert) und bei Bedarf wiederhergestellt werden.
 
 ### 4. Technische Robustheit (KI & Quota)
-*   **Multi-Modell-Architektur**: Unterstützung für Gemini 3 Flash (Performance), 2.5 Flash (Stabilität) und 1.5 Pro (Präzision).
-*   **Smart Quota Recovery**: Überwachung von 429-Fehlern (Limit überschritten). Bei Erreichen des Limits von Gemini 3 wird dem Nutzer ein direkter Wechsel zu Gemini 2.5 angeboten.
+*   **Multi-Modell-Architektur**: Unterstützung für Gemini 3.1 Flash Lite (Neueste, Standard) und Gemini 3 Flash (Schnell).
+*   **Smart Quota Recovery**: Überwachung von 429-Fehlern (Limit überschritten). Bei Erreichen des Limits von Gemini 3.1 Flash Lite wird dem Nutzer ein direkter Wechsel zu Gemini 3 Flash angeboten.
 *   **API-Key Hardening**: Automatische Bereinigung von Leerzeichen, Validierungs-Prüfung beim Start und dedizierter Reset-Button in den Einstellungen.
 
 ---

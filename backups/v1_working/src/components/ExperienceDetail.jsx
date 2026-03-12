@@ -36,7 +36,7 @@ const ExperienceDetail = ({ experience, onClose, apiKey }) => {
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
             const model = genAI.getGenerativeModel({
-                model: "gemini-3-flash-preview",
+                model: "gemini-3.1-flash-lite-preview",
                 systemInstruction: "Du bist ein erfahrener Reiseführer für den Oman. Antworte IMMER auf Deutsch. Verwende Markdown für die Formatierung (Überschriften, Listen, Fettdruck). Sei präzise und gib Geheimtipps."
             });
 
