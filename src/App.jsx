@@ -52,8 +52,8 @@ function App() {
   const [viewMode, setViewMode] = useState('grid');
   const [selectedModel, setSelectedModel] = useState(() => {
     const saved = localStorage.getItem('gemini_selected_model');
-    const validModels = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-1.5-pro'];
-    return validModels.includes(saved) ? saved : 'gemini-2.5-flash';
+    const validModels = ['gemini-3.1-flash-lite-preview', 'gemini-3-flash-preview'];
+    return validModels.includes(saved) ? saved : 'gemini-3.1-flash-lite-preview';
   });
   const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_api_key') || '');
   const [apiStatus, setApiStatus] = useState('idle');
@@ -466,9 +466,8 @@ function App() {
               <div className="settings-card" style={{ marginTop: '1rem' }}>
                 <label>Modell-Auswahl</label>
                 <select value={selectedModel} onChange={e => setSelectedModel(e.target.value)}>
-                  <option value="gemini-3-flash-preview">Gemini 3 Flash (Schnellst)</option>
-                  <option value="gemini-2.5-flash">Gemini 2.5 Flash (Standard)</option>
-                  <option value="gemini-1.5-pro">Gemini 1.5 Pro (Intelligentest)</option>
+                  <option value="gemini-3.1-flash-lite-preview">Gemini 3.1 Flash Lite (Neueste)</option>
+                  <option value="gemini-3-flash-preview">Gemini 3 Flash (Schnell)</option>
                 </select>
               </div>
             </div>

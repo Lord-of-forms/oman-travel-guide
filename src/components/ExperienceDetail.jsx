@@ -8,7 +8,7 @@ const ExperienceDetail = ({
     experience,
     onClose,
     apiKey,
-    selectedModel = "gemini-3-flash-preview",
+    selectedModel = "gemini-3.1-flash-lite-preview",
     onToggleSelection,
     isSelected,
     rating = 0,

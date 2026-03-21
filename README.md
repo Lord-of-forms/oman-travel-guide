@@ -10,7 +10,7 @@ Eine moderne Web-App, die 20 außergewöhnliche "Off-the-beaten-path"-Erlebnisse
 - **Styling**: Vanilla CSS (Custom Design System, Glassmorphism)
 - **Animationen**: Framer Motion
 - **Icons**: Lucide React
-- **KI**: Google Generative AI SDK (Gemini 1.5 Flash)
+- **KI**: Google Generative AI SDK (Gemini 3.1 Flash Lite)
 - **Inhalte**: `experiences.json` (20 recherchierte Orte)
 
 ## 📈 Entwicklungsverlauf (Chronologie)

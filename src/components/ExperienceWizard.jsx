@@ -3,7 +3,7 @@ import { X, Send, Sparkles, Loader2, Compass, MessageSquare } from 'lucide-react
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel = "gemini-3-flash-preview", destination = { name: 'Oman', country: 'Oman' } }) => {
+const ExperienceWizard = ({ onClose, onDiscoveryComplete, apiKey, selectedModel = "gemini-3.1-flash-lite-preview", destination = { name: 'Oman', country: 'Oman' } }) => {
     const [messages, setMessages] = useState([
         { role: 'ai', content: `Hallo! Ich bin dein ${destination.name}-Entdecker. Lass uns in 4 schnellen Schritten Geheimtipps finden.\n\n**Schritt 1:** Welches Terrain reizt dich am meisten?`, options: ["Wüste & Dünen", "Gebirge & Canyons", "Wadis & Oasen", "Küsten & Strände"] }
     ]);
