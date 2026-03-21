@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, Sparkles, Loader2, Info, MessageSquare, Map as MapIcon, Mountain, Waves, Landmark, TreePalm, Tent, Check, Plus, Star } from 'lucide-react';
+import { X, Send, Sparkles, Loader2, Info, MessageSquare, Map as MapIcon, Mountain, Waves, Landmark, TreePalm, Tent, Check, Plus, Star, Share2, Mail, Copy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from 'react-markdown';
+import { shareViaWhatsApp, shareViaEmail, copyToClipboard, generatePlaceShareText } from '../utils/sharing';
 
 const ExperienceDetail = ({
     experience,
@@ -22,7 +23,24 @@ const ExperienceDetail = ({
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [shareCopied, setShareCopied] = useState(false);
     const scrollRef = useRef(null);
+
+    // Support both legacy string notes and new {text, updatedAt} format
+    const noteText = typeof note === 'object' && note !== null ? (note.text || '') : (note || '');
+    const noteUpdatedAt = typeof note === 'object' && note !== null ? note.updatedAt : null;
+
+    const handleNoteChange = (id, value) => {
+        onNoteChange(id, { text: value, updatedAt: new Date().toISOString() });
+    };
+
+    const handleCopyShareLink = async () => {
+        const text = generatePlaceShareText(experience, destination);
+        const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(experience.title + ' ' + experience.location)}`;
+        await copyToClipboard(`${text}\n${url}`);
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2000);
+    };
 
     const suggestedQuestions = [
         "Wie komme ich dorthin?",
@@ -238,8 +256,8 @@ const ExperienceDetail = ({
                         <div className="notes-box" style={{ marginTop: '2rem' }}>
                             <h3>Spezifische Hinweise (für KI-Plan)</h3>
                             <textarea
-                                value={note}
-                                onChange={(e) => onNoteChange(experience.id, e.target.value)}
+                                value={noteText}
+                                onChange={(e) => handleNoteChange(experience.id, e.target.value)}
                                 placeholder="Fügen Sie hier spezielle Wünsche oder Erkenntnisse aus dem Chat ein..."
                                 style={{
                                     width: '100%',
@@ -253,6 +271,41 @@ const ExperienceDetail = ({
                                     resize: 'vertical'
                                 }}
                             />
+                            {noteUpdatedAt && (
+                                <div style={{ fontSize: '0.75rem', opacity: 0.5, marginTop: '0.4rem' }}>
+                                    Zuletzt bearbeitet: {new Date(noteUpdatedAt).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' })}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Share section */}
+                        <div className="share-section" style={{ marginTop: '1.5rem', padding: '1rem', background: 'rgba(255,255,255,0.04)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                            <h4 style={{ margin: '0 0 0.8rem 0', fontSize: '0.9rem', opacity: 0.8, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                <Share2 size={14} /> Teilen
+                            </h4>
+                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                <button
+                                    className="secondary-btn"
+                                    style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem' }}
+                                    onClick={() => shareViaWhatsApp(generatePlaceShareText(experience, destination))}
+                                >
+                                    <Share2 size={13} /> WhatsApp
+                                </button>
+                                <button
+                                    className="secondary-btn"
+                                    style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem' }}
+                                    onClick={() => shareViaEmail(experience.title, generatePlaceShareText(experience, destination))}
+                                >
+                                    <Mail size={13} /> E-Mail
+                                </button>
+                                <button
+                                    className="secondary-btn"
+                                    style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem', color: shareCopied ? 'var(--accent-gold)' : undefined }}
+                                    onClick={handleCopyShareLink}
+                                >
+                                    <Copy size={13} /> {shareCopied ? 'Kopiert!' : 'Link kopieren'}
+                                </button>
+                            </div>
                         </div>
 
                         <div className="info-footer">
@@ -288,7 +341,7 @@ const ExperienceDetail = ({
                                     {msg.role === 'ai' && !isLoading && (
                                         <button
                                             className="secondary-btn mini"
-                                            onClick={() => onNoteChange(experience.id, msg.content.substring(0, 500))}
+                                            onClick={() => handleNoteChange(experience.id, msg.content.substring(0, 500))}
                                             style={{ marginTop: '0.5rem', fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
                                         >
                                             <Check size={12} /> Als Notiz speichern

@@ -10,7 +10,8 @@ const ExperienceGrid = ({
     onRemove,
     ratings,
     onRate,
-    viewMode = 'grid'
+    viewMode = 'grid',
+    destination,
 }) => {
     return (
         <div className={`experience-grid ${viewMode === 'list' ? 'list-view' : ''}`}>
@@ -25,6 +26,7 @@ const ExperienceGrid = ({
                         onRemove={onRemove}
                         rating={ratings[exp.id] || 0}
                         onRate={onRate}
+                        destination={destination}
                     />
                 ))}
             </AnimatePresence>

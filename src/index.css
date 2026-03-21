@@ -1749,3 +1749,519 @@ header p {
 .wizard-content {
   -webkit-backdrop-filter: blur(20px);
 }
+
+/* === FEATURE: Offline Banner & SW Update === */
+.offline-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: #f59e0b;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sw-update-toast {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: var(--accent-gold);
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 12px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.sw-update-toast button {
+  background: rgba(0,0,0,0.2);
+  border: none;
+  color: #1a1a1a;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* === FEATURE: Language Toggle === */
+.header-lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-right: 0.5rem;
+}
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.2rem 0.3rem;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+.lang-btn.active {
+  color: var(--accent-gold);
+}
+.lang-btn:hover {
+  color: var(--text-primary);
+}
+.lang-toggle-settings {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.lang-btn-lg {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.lang-btn-lg.active {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+.lang-btn-lg:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* === FEATURE: Weather Widget === */
+.weather-widget {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+.weather-widget.weather-no-key,
+.weather-widget.weather-loading,
+.weather-widget.weather-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100px;
+  gap: 0.5rem;
+}
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.weather-city {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+.weather-updated {
+  font-size: 0.7rem;
+  opacity: 0.5;
+  display: block;
+  margin-top: 2px;
+}
+.weather-current {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.weather-temp {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.weather-emoji {
+  font-size: 2rem;
+}
+.weather-degree {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+.weather-details {
+  flex: 1;
+}
+.weather-desc {
+  display: block;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+.weather-meta {
+  display: flex;
+  gap: 0.8rem;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+.weather-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.weather-forecast {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  background: rgba(255,255,255,0.03);
+  padding: 0.5rem 0.3rem;
+  border-radius: 10px;
+}
+.forecast-date {
+  font-size: 0.65rem;
+  opacity: 0.5;
+  text-align: center;
+}
+.forecast-icon {
+  font-size: 1.3rem;
+}
+.forecast-temp {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+/* === FEATURE: Currency Converter === */
+.currency-converter {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+.currency-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.currency-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+.currency-updated {
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+.currency-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.currency-field {
+  flex: 1;
+  min-width: 100px;
+}
+.currency-field label {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+.currency-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 0.5rem 0.8rem;
+}
+.currency-input-wrap.result {
+  background: rgba(212, 175, 55, 0.07);
+  border-color: rgba(212, 175, 55, 0.2);
+}
+.currency-symbol {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  min-width: 24px;
+}
+.currency-input-wrap input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  min-width: 0;
+}
+.currency-result {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+.currency-swap-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.currency-swap-btn:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--accent-gold);
+}
+.currency-rate {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+/* === FEATURE: Guide Widgets Grid === */
+.guide-widgets-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.guide-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.8rem 0;
+  opacity: 0.8;
+}
+@media (max-width: 768px) {
+  .guide-widgets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === FEATURE: Map View === */
+.map-container-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.map-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+}
+.map-popup strong {
+  font-size: 0.9rem;
+  color: #1a1a1a;
+}
+.map-popup-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.map-popup-btn {
+  margin-top: 4px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  align-self: flex-start;
+}
+.map-popup-btn:hover {
+  background: #333;
+}
+
+/* === FEATURE: Packing List === */
+.packing-list {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+.packing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.packing-meta {
+  flex: 1;
+}
+.packing-progress-text {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.packing-progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.packing-progress-fill {
+  height: 100%;
+  background: var(--accent-gold);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.packing-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.packing-template-select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: var(--text-primary);
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.packing-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.packing-section {
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.packing-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  background: rgba(255,255,255,0.04);
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+}
+.packing-section-header:hover {
+  background: rgba(255,255,255,0.07);
+}
+.packing-section-count {
+  margin-left: auto;
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+.packing-items {
+  padding: 0.5rem 0.8rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.packing-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  transition: opacity 0.15s;
+}
+.packing-item input[type="checkbox"] {
+  accent-color: var(--accent-gold);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.packing-item.checked span {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+.packing-add-item {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+.packing-add-item input {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: var(--text-primary);
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+}
+.packing-add-item button {
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 8px;
+  color: var(--accent-gold);
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.packing-add-item button:hover {
+  background: rgba(212,175,55,0.25);
+}
+
+/* === FEATURE: Planner Avg Rating === */
+.planner-avg-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 20px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+/* === FEATURE: Share Card Button === */
+.share-card-btn {
+  margin-right: 2px !important;
+}
+
+/* === FEATURE: Header Status === */
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

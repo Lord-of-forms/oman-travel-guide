@@ -10,6 +10,8 @@ export const destinations = [
     language: 'de',
     aiLanguageInstruction: 'Antworte IMMER auf Deutsch.',
     categories: ['Wüste', 'Wasser', 'Gebirge', 'Kultur', 'Küste'],
+    centerLat: 22.5,
+    centerLng: 57.5,
   },
 ];
 

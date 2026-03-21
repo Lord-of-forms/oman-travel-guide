@@ -1,6 +1,7 @@
 import React from 'react';
-import { MapPin, Check, Trash2, Star, Mountain, Waves, Landmark, TreePalm, Tent } from 'lucide-react';
+import { MapPin, Check, Trash2, Star, Mountain, Waves, Landmark, TreePalm, Tent, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { sharePlace } from '../utils/sharing';
 
 const CategoryIcon = ({ category, size = 24 }) => {
     switch (category?.toLowerCase()) {
@@ -33,9 +34,15 @@ const ExperienceCard = ({
     onToggleSelection,
     onRemove,
     rating = 0,
-    onRate
+    onRate,
+    destination,
 }) => {
     const categoryClass = experience.category ? `placeholder-${experience.category.toLowerCase()}` : '';
+
+    const handleShare = async (e) => {
+        e.stopPropagation();
+        await sharePlace(experience, destination);
+    };
 
     return (
         <motion.div
@@ -76,6 +83,15 @@ const ExperienceCard = ({
                         title="Von der Übersicht entfernen"
                     >
                         <Trash2 size={12} />
+                    </button>
+
+                    <button
+                        className="remove-btn share-card-btn"
+                        onClick={handleShare}
+                        title="Teilen"
+                        style={{ marginRight: '2px' }}
+                    >
+                        <Share2 size={12} />
                     </button>
 
                     <button
